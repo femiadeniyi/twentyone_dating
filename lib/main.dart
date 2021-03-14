@@ -10,7 +10,7 @@ import 'package:twentyone_dating/widgets/questions/PersonalityType.dart';
 
 void main() async{
 
-  var appState = AppState();
+  var appState = AppState(page: -1);
   await appState.init();
 
   runApp(
@@ -83,7 +83,6 @@ class _AppRouterState extends State<AppRouter> {
 
   void _incrementCounter() {
     // var page =context.read()<dynamic>();
-    context.read<AppState>().setPage("ddd");
     print(context.read<AppState>().page);
 
     setState(() {
@@ -99,7 +98,7 @@ class _AppRouterState extends State<AppRouter> {
   Widget get currentWidget {
     var page = context.watch<AppState>().page;
     switch (page) {
-      case "personality": {
+      case 0: {
         return PersonalityType();
       }
       default: {
@@ -110,20 +109,10 @@ class _AppRouterState extends State<AppRouter> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
+
     
     return AnimatedSwitcher(duration: Duration(milliseconds: 500), child: currentWidget,);
-    var page = context.watch<AppState>().page;
-    switch (page) {
-      case "personality": {
-        return PersonalityType();
-      }
-      default: {
-        return Home();
-      }
-    }
+
 
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather

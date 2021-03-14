@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:twentyone_dating/model/AppState.dart';
+import 'package:twentyone_dating/model/Question.dart';
+
 
 class PersonalityType extends StatefulWidget {
   @override
@@ -11,13 +15,16 @@ class PersonalityType extends StatefulWidget {
 
 class _PersonalityTypeState extends State<PersonalityType> {
   final _formKey = GlobalKey<FormState>();
-  late String p1, p2, p3, p4;
+  late String ei, si, tf, jp;
 
   @override
   Widget build(BuildContext context) {
+    final node = FocusScope.of(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          print("$ei $si");
+        },
         tooltip: 'Increment',
         child: FaIcon(FontAwesomeIcons.question),
       ),
@@ -26,7 +33,15 @@ class _PersonalityTypeState extends State<PersonalityType> {
         child: GestureDetector(
           onVerticalDragEnd: (dragUpdateDetails) {
             print(_formKey.currentState);
+
             if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+              print("$ei $si");
+              var appState = context.read<AppState>();
+              var response = "$ei$si$tf$jp";
+
+              appState.addQuestionResponse(Question(id: appState.page, response:response));
+
               print(dragUpdateDetails);
             }
           },
@@ -68,6 +83,8 @@ class _PersonalityTypeState extends State<PersonalityType> {
                       SizedBox(
                         width: 40,
                         child: TextFormField(
+                          onEditingComplete: () => node.nextFocus(),
+                          onSaved: (v) => ei=v!,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'([eE]|[iI])')),
@@ -92,6 +109,8 @@ class _PersonalityTypeState extends State<PersonalityType> {
                       SizedBox(
                         width: 40,
                         child: TextFormField(
+                          onEditingComplete: () => node.nextFocus(),
+                          onSaved: (v) => si=v!,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'([sS]|[iI])')),
@@ -116,6 +135,8 @@ class _PersonalityTypeState extends State<PersonalityType> {
                       SizedBox(
                         width: 40,
                         child: TextFormField(
+                          onEditingComplete: () => node.nextFocus(),
+                          onSaved: (v) => tf=v!,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'([tT]|[fF])')),
@@ -140,6 +161,8 @@ class _PersonalityTypeState extends State<PersonalityType> {
                       SizedBox(
                         width: 40,
                         child: TextFormField(
+                          onEditingComplete: () => node.nextFocus(),
+                          onSaved: (v) => jp=v!,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'([jJ]|[pP])')),

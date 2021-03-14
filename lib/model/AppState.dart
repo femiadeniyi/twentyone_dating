@@ -1,46 +1,61 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twentyone_dating/model/Question.dart';
 
 
 part 'AppState.g.dart';
 
-enum LyricType {
-  vox_main, vox_two, drum_1, drum_2
-}
+
 
 @JsonSerializable()
 class AppState extends ChangeNotifier {
 
-  AppState({this.page});
+  AppState({required this.page});
 
+  @JsonKey(ignore: true)
   late final SharedPreferences prefs;
 
   Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
-    if (page == null) {
-      var str = prefs.getString('state');
-      if (str == null){
-        page = "";
-      } else {
-        var local =  AppState.fromJson(jsonDecode(str));
-        page = local.page;
-      }
+    var appState = _getState();
+
+    if (page < 0){
+      questions = [];
+    } else if (appState != null){
+      page = appState.page;
+      questions = appState.questions;
+    } else {
+      page = 0;
+      questions =[];
     }
   }
 
-  void setPage(String p) async{
+  AppState? _getState(){
+    var str = prefs.getString('state');
+    if (str == null){
+      return null;
+    } else {
+      return AppState.fromJson(jsonDecode(str));
+    }
+  }
+
+  void setPage(int p) async{
     page = p;
-    print(prefs);
     await prefs.setString("state", jsonEncode(this.toJson()));
-    print("done");
+    notifyListeners();
+  }
+
+  void addQuestionResponse(Question question) async{
+    questions.add(question);
+    await prefs.setString("state", jsonEncode(this.toJson()));
     notifyListeners();
   }
 
   @JsonKey(required: true)
-  String? page;
+  int page;
+  late final List<Question> questions;
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.
@@ -54,6 +69,6 @@ class AppState extends ChangeNotifier {
 
   @override
   String toString() {
-    return "page => $page";
+    return "page => $page\nquestions => $questions";
   }
 }

@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
         padding: EdgeInsets.all(16),
         child: GestureDetector(
           onVerticalDragEnd: (dragUpdateDetails) {
-            context.read<AppState>().setPage("personality");
+            context.read<AppState>().setPage(0);
           },
           child: Center(
             child: Column(
