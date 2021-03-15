@@ -1,32 +1,32 @@
 import 'dart:convert';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twentyone_dating/model/AppState.dart';
 import 'package:twentyone_dating/widgets/Home.dart';
+import 'package:twentyone_dating/widgets/QuestionContainer.dart';
+import 'package:twentyone_dating/widgets/QuestionContainer2.dart';
 import 'package:twentyone_dating/widgets/questions/PersonalityType.dart';
+import 'package:twentyone_dating/widgets/questions/Q1.dart';
+import 'package:twentyone_dating/widgets/questions/Q2.dart';
 
-
-
-void main() async{
-
-  var appState = AppState(page: -1);
+void main() async {
+  var appState = AppState();
   await appState.init();
 
-  runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AppState>(
-            create: (context) => appState,
-          )
-        ],
-        child: MyApp(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<AppState>(
+        create: (context) => appState,
       )
-  );
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-
   late final String page;
 
   Future<void> initState() async {
@@ -52,7 +52,6 @@ class MyApp extends StatelessWidget {
       ),
       home: AppRouter(title: 'Flutter Demo Home Page'),
     );
-
   }
 }
 
@@ -78,9 +77,6 @@ class _AppRouterState extends State<AppRouter> {
   int _counter = 0;
   String _page = "";
 
-
-
-
   void _incrementCounter() {
     // var page =context.read()<dynamic>();
     print(context.read<AppState>().page);
@@ -98,21 +94,55 @@ class _AppRouterState extends State<AppRouter> {
   Widget get currentWidget {
     var page = context.watch<AppState>().page;
     switch (page) {
-      case 0: {
-        return PersonalityType();
+      case 0:
+        {
+          return PersonalityType();
+        }
+      case 1:
+        {
+          return QuestionContainer2(
+              responses: [
+                "Wife of a Preacher / Preacher",
+                "Wife of a Governor / Governor",
+                "Wife of a Gunman / Gunman",
+              ],
+              question: "Would you date"
+          );
+        }
+      case 2:
+        {
+          return QuestionContainer2(
+              responses: [
+                "♂ Random compliment / ♀ Excuse me miss",
+                "♂ Excuse me 'random question' / ♀ Random question",
+                "♂ Eye contact (stare) / ♀ Sorry",
+              ],
+              question: "You prefer the approach to you"
+          );
+        }
+      case 3:{
+        return QuestionContainer2(
+            responses: [
+              "Hand holding",
+              'Arm around should',
+              'None of that'
+            ],
+            question: "You go out and prefer"
+        );
       }
-      default: {
-        return Home();
-      }
+      default:
+        {
+          return Home();
+        }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
-    
-    return AnimatedSwitcher(duration: Duration(milliseconds: 500), child: currentWidget,);
-
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 500),
+      child: currentWidget,
+    );
 
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather

@@ -41,6 +41,7 @@ class _PersonalityTypeState extends State<PersonalityType> {
               var response = "$ei$si$tf$jp";
 
               appState.addQuestionResponse(Question(id: appState.page, response:response));
+              appState.setPage(appState.page+1);
 
               print(dragUpdateDetails);
             }

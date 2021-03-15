@@ -8,11 +8,11 @@ part of 'AppState.dart';
 
 AppState _$AppStateFromJson(Map<String, dynamic> json) {
   $checkKeys(json, requiredKeys: const ['page']);
-  return AppState(
-    page: json['page'] as int,
-  )..questions = (json['questions'] as List<dynamic>)
-      .map((e) => Question.fromJson(e as Map<String, dynamic>))
-      .toList();
+  return AppState()
+    ..page = json['page'] as int
+    ..questions = (json['questions'] as List<dynamic>)
+        .map((e) => Question.fromJson(e as Map<String, dynamic>))
+        .toList();
 }
 
 Map<String, dynamic> _$AppStateToJson(AppState instance) => <String, dynamic>{

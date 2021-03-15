@@ -12,7 +12,7 @@ part 'AppState.g.dart';
 @JsonSerializable()
 class AppState extends ChangeNotifier {
 
-  AppState({required this.page});
+  AppState();
 
   @JsonKey(ignore: true)
   late final SharedPreferences prefs;
@@ -21,9 +21,7 @@ class AppState extends ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
     var appState = _getState();
 
-    if (page < 0){
-      questions = [];
-    } else if (appState != null){
+    if (appState != null){
       page = appState.page;
       questions = appState.questions;
     } else {
@@ -54,7 +52,7 @@ class AppState extends ChangeNotifier {
   }
 
   @JsonKey(required: true)
-  int page;
+  late int page;
   late final List<Question> questions;
 
   /// A necessary factory constructor for creating a new User instance
