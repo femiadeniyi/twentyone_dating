@@ -94,11 +94,11 @@ class _AppRouterState extends State<AppRouter> {
   Widget get currentWidget {
     var page = context.watch<AppState>().page;
     switch (page) {
-      case 0:
+      case 1:
         {
           return PersonalityType();
         }
-      case 1:
+      case 2:
         {
           return QuestionContainer2(
               responses: [
@@ -109,7 +109,7 @@ class _AppRouterState extends State<AppRouter> {
               question: "Would you date"
           );
         }
-      case 2:
+      case 3:
         {
           return QuestionContainer2(
               responses: [
@@ -120,7 +120,7 @@ class _AppRouterState extends State<AppRouter> {
               question: "You prefer the approach to you"
           );
         }
-      case 3:{
+      case 4:{
         return QuestionContainer2(
             responses: [
               "Hand holding",

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:twentyone_dating/model/AppState.dart';
 import 'package:provider/provider.dart';
+import 'package:twentyone_dating/widgets/VideoContainer.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -11,8 +12,13 @@ class Home extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(16),
         child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: (){
+            print("yellow");
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => VideoContainer()));
+          },
           onVerticalDragEnd: (dragUpdateDetails) {
-            context.read<AppState>().setPage(0);
+            context.read<AppState>().setPage(1);
           },
           child: Center(
             child: Column(
@@ -29,7 +35,6 @@ class Home extends StatelessWidget {
                       "Personality AI Matching",
                       "Swipe left 👈",
                       "Still thinking? 🤔",
-                      "I'll convince you",
                       "Tap 👆",
                       "🔁 restarting"
                     ],
