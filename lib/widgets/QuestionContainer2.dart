@@ -4,17 +4,22 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:twentyone_dating/model/AppState.dart';
-import 'package:twentyone_dating/model/Question.dart';
 import 'package:provider/provider.dart';
 
 
 class QuestionContainer2 extends StatefulWidget {
 
-  QuestionContainer2({required this.responses, required this.question});
+  QuestionContainer2({
+    required this.responses,
+    required this.question,
+    required this.next,
+    required this.key,
+  });
 
   final List<String> responses;
   final String question;
+  final int next;
+  final Key key;
 
 
   @override
@@ -27,21 +32,18 @@ class _QuestionContainer2State extends State<QuestionContainer2> {
 
   void _saveAnswer(String response){
     if(_done == null){
-      print("hello");
       _done = true;
-      var appState = context.read<AppState>();
-      appState.addQuestionResponse(Question(id: appState.page, response:response));
-      appState.setPage(appState.page+1);
+
     }
   }
 
 
   @override
   Widget build(BuildContext context) {
+    print("${widget.question} lets see");
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("$ei $si");
         },
         tooltip: 'Increment',
         child: FaIcon(FontAwesomeIcons.female),
@@ -54,6 +56,7 @@ class _QuestionContainer2State extends State<QuestionContainer2> {
             children: [
               SizedBox(
                 child: ColorizeAnimatedTextKit(
+                  totalRepeatCount:1,
                   colors: [
                     Colors.purple,
                     Colors.blue,
@@ -83,6 +86,7 @@ class _QuestionContainer2State extends State<QuestionContainer2> {
                       borderRadius: BorderRadius.circular(36.0),
                     )),
                 child: ColorizeAnimatedTextKit(
+                  totalRepeatCount:1,
                   onTap: () => _saveAnswer("1"),
                   colors: [
                     Colors.purple,
@@ -111,6 +115,7 @@ class _QuestionContainer2State extends State<QuestionContainer2> {
                       borderRadius: BorderRadius.circular(36.0),
                     )),
                 child: ColorizeAnimatedTextKit(
+                  totalRepeatCount:1,
                   onTap: () => _saveAnswer("0"),
                   colors: [
                     Colors.purple,
@@ -139,6 +144,7 @@ class _QuestionContainer2State extends State<QuestionContainer2> {
                       borderRadius: BorderRadius.circular(36.0),
                     )),
                 child: ColorizeAnimatedTextKit(
+                  totalRepeatCount:1,
                   onTap: () => _saveAnswer("-1"),
                   colors: [
                     Colors.purple,
