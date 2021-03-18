@@ -1,11 +1,18 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:twentyone_dating/model/AppState.dart';
 import 'package:provider/provider.dart';
+import 'package:twentyone_dating/model/Question.dart';
+import 'package:twentyone_dating/widgets/QuestionStateless.dart';
+import 'package:twentyone_dating/widgets/QuestionWidget.dart';
 import 'package:twentyone_dating/widgets/VideoContainer.dart';
 
 class Home extends StatelessWidget {
+
+  Home(this.questionList);
+
+  final List<Question> questionList;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,10 +22,12 @@ class Home extends StatelessWidget {
           behavior: HitTestBehavior.translucent,
           onTap: (){
             print("yellow");
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => VideoContainer()));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => VideoContainer()));
           },
           onVerticalDragEnd: (dragUpdateDetails) {
-            context.read<AppState>().setPage(1);
+            print("$questions bloo");
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) =>
+                QuestionWidget(question: questionList.first)));
           },
           child: Center(
             child: Column(
@@ -27,7 +36,7 @@ class Home extends StatelessWidget {
                 SizedBox(
                   child: TypewriterAnimatedTextKit(
                     onTap: () {
-                      print("Tap Event");
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => VideoContainer()));
                     },
                     text: [
                       "Try this dating App",

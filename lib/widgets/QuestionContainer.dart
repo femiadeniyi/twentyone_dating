@@ -4,9 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:twentyone_dating/model/AppState.dart';
-import 'package:twentyone_dating/model/Question.dart';
-import 'package:provider/provider.dart';
 
 
 class QuestionContainer extends StatefulWidget {
@@ -29,9 +26,7 @@ class _QuestionContainerState extends State<QuestionContainer> {
     if(_done == null){
       print("hello");
       _done = true;
-      var appState = context.read<AppState>();
-      appState.addQuestionResponse(Question(id: appState.page, response:response));
-      appState.setPage(appState.page+1);
+
     }
   }
 

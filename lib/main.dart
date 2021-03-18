@@ -4,26 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:twentyone_dating/model/AppState.dart';
 import 'package:twentyone_dating/widgets/Home.dart';
-import 'package:twentyone_dating/widgets/QuestionContainer.dart';
-import 'package:twentyone_dating/widgets/QuestionContainer2.dart';
 import 'package:twentyone_dating/widgets/questions/PersonalityType.dart';
-import 'package:twentyone_dating/widgets/questions/Q1.dart';
-import 'package:twentyone_dating/widgets/questions/Q2.dart';
 
-void main() async {
-  var appState = AppState();
-  await appState.init();
+import 'model/Question.dart';
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<AppState>(
-        create: (context) => appState,
-      )
-    ],
-    child: MyApp(),
-  ));
+void main() {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -75,73 +62,31 @@ class AppRouter extends StatefulWidget {
 
 class _AppRouterState extends State<AppRouter> {
   int _counter = 0;
-  String _page = "";
 
-  void _incrementCounter() {
-    // var page =context.read()<dynamic>();
-    print(context.read<AppState>().page);
+  late final List<Question> _questionList;
 
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    var json = jsonEncode(questions);
+
+    List list = jsonDecode(json);
+
+    List<Question> questionList = list.map((e) => Question.fromJson(e)).toList();
+    var newList = questionList.map((e) => Question(question:e.question, responses:e.responses, answers:e.answers, type:e.type, allQuestions:questionList)).toList();
+    _questionList = newList;
   }
 
-  Widget get currentWidget {
-    var page = context.watch<AppState>().page;
-    switch (page) {
-      case 1:
-        {
-          return PersonalityType();
-        }
-      case 2:
-        {
-          return QuestionContainer2(
-              responses: [
-                "Wife of a Preacher / Preacher",
-                "Wife of a Governor / Governor",
-                "Wife of a Gunman / Gunman",
-              ],
-              question: "Would you date"
-          );
-        }
-      case 3:
-        {
-          return QuestionContainer2(
-              responses: [
-                "♂ Random compliment / ♀ Excuse me miss",
-                "♂ Excuse me 'random question' / ♀ Random question",
-                "♂ Eye contact (stare) / ♀ Sorry",
-              ],
-              question: "You prefer the approach to you"
-          );
-        }
-      case 4:{
-        return QuestionContainer2(
-            responses: [
-              "Hand holding",
-              'Arm around should',
-              'None of that'
-            ],
-            question: "You go out and prefer"
-        );
-      }
-      default:
-        {
-          return Home();
-        }
-    }
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 500),
-      child: currentWidget,
+      child: Home(_questionList),
     );
 
     // The Flutter framework has been optimized to make rerunning build methods

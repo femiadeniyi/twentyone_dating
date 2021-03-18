@@ -4,11 +4,17 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:twentyone_dating/model/AppState.dart';
 import 'package:twentyone_dating/model/Question.dart';
+import 'package:twentyone_dating/widgets/QuestionWidget.dart';
+
 
 
 class PersonalityType extends StatefulWidget {
+
+  PersonalityType(this.question);
+
+  final Question question;
+
   @override
   _PersonalityTypeState createState() => _PersonalityTypeState();
 }
@@ -36,14 +42,18 @@ class _PersonalityTypeState extends State<PersonalityType> {
 
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
-              print("$ei $si");
-              var appState = context.read<AppState>();
+
               var response = "$ei$si$tf$jp";
 
-              appState.addQuestionResponse(Question(id: appState.page, response:response));
-              appState.setPage(appState.page+1);
 
-              print(dragUpdateDetails);
+
+
+            print("$questions");
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder:
+                    (_) => QuestionWidget(question: widget.question.next())
+                )
+              );
             }
           },
           child: Center(
@@ -64,7 +74,7 @@ class _PersonalityTypeState extends State<PersonalityType> {
                         Colors.red,
                       ],
                       text: [
-                        "What is your personality type?",
+                        widget.question.question
                       ],
                       textStyle: GoogleFonts.roboto(
                           fontWeight: FontWeight.w200,

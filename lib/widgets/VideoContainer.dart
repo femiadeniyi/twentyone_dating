@@ -25,8 +25,7 @@ class _VideoContainerState extends State<VideoContainer> {
       if(!_started && isPlaying){
         _started = true;
       } else if (!isPlaying && _started){
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => Home()));
+        Navigator.of(context).pop();
       }
     });
     _initializeVideoPlayerFuture = _controller.initialize();
