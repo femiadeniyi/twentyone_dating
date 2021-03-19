@@ -3,9 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
-	"graph-db/model"
 	. "graph-db/model"
-	"log"
 	"net/http"
 )
 
@@ -17,8 +15,9 @@ func main() {
 	}
 	// Handle driver lifetime based on your application lifetime requirements  driver's lifetime is usually
 	// bound by the applicati
-	model.WriteDefaultQuestions(driver)
+	WriteDefaultQuestions(driver)
 
 	http.HandleFunc("/person", HandlePerson)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.HandleFunc("/question", HandleQuestion)
+	//log.Fatal(http.ListenAndServe(":8080", nil))
 }

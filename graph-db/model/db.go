@@ -42,13 +42,30 @@ func WriteDefaultQuestions(driver neo4j.Driver) {
 	}
 }
 
+func ReadAllQuestions(driver neo4j.Driver) []Question {
+
+	session := driver.NewSession(neo4j.SessionConfig{})
+	defer session.Close()
+
+	// read all questions
+	records, err := session.WriteTransaction(readAllQuestions())
+	if err != nil {
+		panic(fmt.Errorf("tx error %v", err))
+	}
+
+	// decode tx
+	questions := records.([]Question)
+
+	return questions
+}
+
 func readAllQuestions() func(tx neo4j.Transaction) (interface{}, error) {
 
 	return func(tx neo4j.Transaction) (i interface{}, e error) {
 
 		var questions []Question
 
-		record, err := tx.Run("MATCH (n:Question) RETURN n", map[string]interface{}{})
+		record, err := tx.Run("MATCH (n:Question)-[]->(r:Response) RETURN n{.name, .value, questions:collect(r)}", map[string]interface{}{})
 		if err != nil {
 			panic(fmt.Errorf("could not run query %v", err))
 		}
@@ -58,12 +75,14 @@ func readAllQuestions() func(tx neo4j.Transaction) (interface{}, error) {
 			panic(fmt.Errorf("error collecting records %v", err))
 		}
 
-		for _, v := range records {
+		for i, v := range records {
 			var question Question
 
-			node := v.Values[0].(neo4j.Node)
+			node := v.Values[0].(map[string]interface{})
 
-			str, err := json.Marshal(node.Props)
+			fmt.Println(node, i)
+
+			str, err := json.Marshal(node)
 			if err != nil {
 				panic(fmt.Errorf("error unmarshalling %v", err))
 			}

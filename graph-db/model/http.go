@@ -28,3 +28,24 @@ func HandlePerson(w http.ResponseWriter, r *http.Request) {
 
 	WritePerson(driver)
 }
+
+func HandleQuestion(w http.ResponseWriter, r *http.Request) {
+
+	dbUri := "neo4j://localhost:7687"
+	driver, err := neo4j.NewDriver(dbUri, neo4j.BasicAuth("root", "abc", ""))
+	if err != nil {
+		panic(fmt.Sprintf("error connecting to db %v", err))
+	}
+
+	if r.Method == http.MethodGet {
+		questions := ReadAllQuestions(driver)
+
+		resp, err := json.Marshal(questions)
+		if err != nil {
+			panic(fmt.Errorf("error marshalling %v", err))
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(resp)
+	}
+}
