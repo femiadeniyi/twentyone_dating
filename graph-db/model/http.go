@@ -44,7 +44,7 @@ func HandleQuestion(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(fmt.Errorf("error marshalling %v", err))
 		}
-
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(resp)
 	}

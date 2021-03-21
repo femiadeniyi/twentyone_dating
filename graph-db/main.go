@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
 	. "graph-db/model"
+	"log"
 	"net/http"
 )
 
@@ -19,5 +20,5 @@ func main() {
 
 	http.HandleFunc("/person", HandlePerson)
 	http.HandleFunc("/question", HandleQuestion)
-	//log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

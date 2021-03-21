@@ -2,13 +2,13 @@ package model
 
 type Option struct {
 	Oid  int    `json:"oid"`
-	Name string `json:"name"`
+	Text string `json:"text"`
 }
 
 type Question struct {
-	Name   string   `json:"name"`
-	Value  string   `json:"value"`
-	Option []Option `json:"option,omitempty"`
+	Name    string   `json:"name"`
+	Text    string   `json:"text"`
+	Options []Option `json:"options,omitempty"`
 }
 
 type Person struct {
@@ -22,358 +22,358 @@ type Person struct {
 func Questions() []Question {
 	return []Question{
 		{
-			Name:  "Peacefulness",
-			Value: "Would you date",
-			Option: []Option{
+			Name: "Peacefulness",
+			Text: "Would you date",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Wife of a Preacher / Preacher",
+					Text: "Wife of a Preacher / Preacher",
 				},
 				{
 					Oid:  0,
-					Name: "Wife of a Governor / Governor",
+					Text: "Wife of a Governor / Governor",
 				},
 				{
 					Oid:  -1,
-					Name: "Wife of a Gunman / Gunman",
+					Text: "Wife of a Gunman / Gunman",
 				},
 			},
 		},
 		{
-			Name:  "Approachness",
-			Value: "You prefer the approach to you",
-			Option: []Option{
+			Name: "Approachness",
+			Text: "You prefer the approach to you",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Random compliment / Excuse me miss",
+					Text: "Random compliment / Excuse me miss",
 				},
 				{
 					Oid:  0,
-					Name: "Excuse me 'random question' / Random Question",
+					Text: "Excuse me 'random question' / Random Question",
 				},
 				{
 					Oid:  -1,
-					Name: "Eye contact (stare) / Sorry",
+					Text: "Eye contact (stare) / Sorry",
 				},
 			},
 		},
 		{
-			Name:  "Handness",
-			Value: "You go out and prefer",
-			Option: []Option{
+			Name: "Handness",
+			Text: "You go out and prefer",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Hand holding",
+					Text: "Hand holding",
 				},
 				{
 					Oid:  0,
-					Name: "Arm around shoulder",
+					Text: "Arm around shoulder",
 				},
 				{
 					Oid:  -1,
-					Name: "None of that",
+					Text: "None of that",
 				},
 			},
 		},
 		{
-			Name:  "Forgive",
-			Value: "The love of your life cheats on you. You",
-			Option: []Option{
+			Name: "Forgive",
+			Text: "The love of your life cheats on you. You",
+			Options: []Option{
 				{
 					Oid:  -1,
-					Name: "Divorce",
+					Text: "Divorce",
 				},
 				{
 					Oid:  0,
-					Name: "Neither",
+					Text: "Neither",
 				},
 				{
 					Oid:  1,
-					Name: "Forgive",
+					Text: "Forgive",
 				},
 			},
 		},
 		{
-			Name:  "Violence",
-			Value: "You discover the person you're dating is the wife of a Gunman / a Gunman. You",
-			Option: []Option{
+			Name: "Violence",
+			Text: "You discover the person you're dating is the wife of a Gunman / a Gunman. You",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Carry on dating",
+					Text: "Carry on dating",
 				},
 				{
 					Oid:  0,
-					Name: "Convince them to leave gun life",
+					Text: "Convince them to leave gun life",
 				},
 				{
 					Oid:  -1,
-					Name: "Stop dating",
+					Text: "Stop dating",
 				},
 			},
 		},
 		{
-			Name:  "Rich",
-			Value: "You discover the person you're dating is the wife of a rich man / a rich man and you're broke. You",
-			Option: []Option{
+			Name: "Rich",
+			Text: "You discover the person you're dating is the wife of a rich man / a rich man and you're broke. You",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Try get money off them",
+					Text: "Try get money off them",
 				},
 				{
 					Oid:  0,
-					Name: "Carry on dating",
+					Text: "Carry on dating",
 				},
 				{
 					Oid:  -1,
-					Name: "Ask why they're into you",
+					Text: "Ask why they're into you",
 				},
 			},
 		},
 		{
-			Name:  "Religion Wise",
-			Value: "You discover the person you're dating is a religious leader and you're not religious. You",
-			Option: []Option{
+			Name: "Religion Wise",
+			Text: "You discover the person you're dating is a religious leader and you're not religious. You",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Consider their religion will get in your way",
+					Text: "Consider their religion will get in your way",
 				},
 				{
 					Oid:  0,
-					Name: "Ask about their religion",
+					Text: "Ask about their religion",
 				},
 				{
 					Oid:  -1,
-					Name: "Carry on dating",
+					Text: "Carry on dating",
 				},
 			},
 		},
 		{
-			Name:  "Outing",
-			Value: "You go and a date and you like to",
-			Option: []Option{
+			Name: "Outing",
+			Text: "You go and a date and you like to",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Go somewhere",
+					Text: "Go somewhere",
 				},
 				{
 					Oid:  0,
-					Name: "Sit down and chat",
+					Text: "Sit down and chat",
 				},
 				{
 					Oid:  -1,
-					Name: "Go in a group",
+					Text: "Go in a group",
 				},
 			},
 		},
 		{
-			Name:  "Money",
-			Value: "You become mega rich. You",
-			Option: []Option{
+			Name: "Money",
+			Text: "You become mega rich. You",
+			Options: []Option{
 				{
 					Oid:  -1,
-					Name: "Still talk to old friends",
+					Text: "Still talk to old friends",
 				},
 				{
 					Oid:  1,
-					Name: "Disconnect from them",
+					Text: "Disconnect from them",
 				},
 			},
 		},
 		{
-			Name:  "Reaching Out",
-			Value: "You find out someone likes you. You",
-			Option: []Option{
+			Name: "Reaching Out",
+			Text: "You find out someone likes you. You",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Reach out",
+					Text: "Reach out",
 				},
 				{
 					Oid:  0,
-					Name: "Let them try reach out",
+					Text: "Let them try reach out",
 				},
 				{
 					Oid:  -1,
-					Name: "Forget it",
+					Text: "Forget it",
 				},
 			},
 		},
 		{
-			Name:  "Many Many",
-			Value: "The person you date had many partners before you. For you",
-			Option: []Option{
+			Name: "Many Many",
+			Text: "The person you date had many partners before you. For you",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "That's ok",
+					Text: "That's ok",
 				},
 				{
 					Oid:  0,
-					Name: "You need to ask them about this",
+					Text: "You need to ask them about this",
 				},
 				{
 					Oid:  -1,
-					Name: "100% unacceptable",
+					Text: "100% unacceptable",
 				},
 			},
 		},
 		{
-			Name:  "Not Social",
-			Value: "You're wife / husband is 100% not a social person. For you",
-			Option: []Option{
+			Name: "Not Social",
+			Text: "You're wife / husband is 100% not a social person. For you",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "That's ok",
+					Text: "That's ok",
 				},
 				{
 					Oid:  0,
-					Name: "You need to ask them about this",
+					Text: "You need to ask them about this",
 				},
 				{
 					Oid:  -1,
-					Name: "100% unacceptable",
+					Text: "100% unacceptable",
 				},
 			},
 		},
 		{
-			Name:  "Clothes",
-			Value: "I care what my wife / husband wears. You prefer",
-			Option: []Option{
+			Name: "Clothes",
+			Text: "I care what my wife / husband wears. You prefer",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Conservative dressing",
+					Text: "Conservative dressing",
 				},
 				{
 					Oid:  0,
-					Name: "I trust their judgement",
+					Text: "I trust their judgement",
 				},
 				{
 					Oid:  -1,
-					Name: "Show skin",
+					Text: "Show skin",
 				},
 			},
 		},
 		{
-			Name:  "First",
-			Value: "You have to be your wife's/husband's no. 1 choice, You prefer",
-			Option: []Option{
+			Name: "First",
+			Text: "You have to be your wife's/husband's no. 1 choice, You prefer",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "100%",
+					Text: "100%",
 				},
 				{
 					Oid:  0,
-					Name: "As long as I'm on the priority list",
+					Text: "As long as I'm on the priority list",
 				},
 				{
 					Oid:  -1,
-					Name: "I don't see things that way",
+					Text: "I don't see things that way",
 				},
 			},
 		},
 		{
-			Name:  "Opposite Sex",
-			Value: "You don't like your husband / wife near many people of the opposite sex. You say",
-			Option: []Option{
+			Name: "Opposite Sex",
+			Text: "You don't like your husband / wife near many people of the opposite sex. You say",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "100% no",
+					Text: "100% no",
 				},
 				{
 					Oid:  0,
-					Name: "It's ok",
+					Text: "It's ok",
 				},
 				{
 					Oid:  -1,
-					Name: "It's normal, can't avoid it",
+					Text: "It's normal, can't avoid it",
 				},
 			},
 		},
 		{
-			Name:  "The One",
-			Value: "You believe in the one. You say",
-			Option: []Option{
+			Name: "The One",
+			Text: "You believe in the one. You say",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "There is 1 right person and millions of the wrong person",
+					Text: "There is 1 right person and millions of the wrong person",
 				},
 				{
 					Oid:  0,
-					Name: "There are a few right people and many wrong people. Need to make a wise choice",
+					Text: "There are a few right people and many wrong people. Need to make a wise choice",
 				},
 				{
 					Oid:  -1,
-					Name: "There is no right or wrong person. You make things work together",
+					Text: "There is no right or wrong person. You make things work together",
 				},
 			},
 		},
 		{
-			Name:  "Different Country",
-			Value: "Your wife / husband is from a different country to you. You prefer",
-			Option: []Option{
+			Name: "Different Country",
+			Text: "Your wife / husband is from a different country to you. You prefer",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "Yes",
+					Text: "Yes",
 				},
 				{
 					Oid:  0,
-					Name: "Doesn't matter",
+					Text: "Doesn't matter",
 				},
 				{
 					Oid:  -1,
-					Name: "No",
+					Text: "No",
 				},
 			},
 		},
 		{
-			Name:  "Uni",
-			Value: "Your can find a wife / husband in uni. You say",
-			Option: []Option{
+			Name: "Uni",
+			Text: "Your can find a wife / husband in uni. You say",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "It's possible",
+					Text: "It's possible",
 				},
 				{
 					Oid:  0,
-					Name: "It's difficult",
+					Text: "It's difficult",
 				},
 				{
 					Oid:  -1,
-					Name: "Are you crazy?",
+					Text: "Are you crazy?",
 				},
 			},
 		},
 		{
-			Name:  "Cheat",
-			Value: "You cheat on your wife / husband. Can you live with yourself? You say",
-			Option: []Option{
+			Name: "Cheat",
+			Text: "You cheat on your wife / husband. Can you live with yourself? You say",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "It's not good but yes",
+					Text: "It's not good but yes",
 				},
 				{
 					Oid:  0,
-					Name: "I have to tell someone but not them",
+					Text: "I have to tell someone but not them",
 				},
 				{
 					Oid:  -1,
-					Name: "I have to tell them",
+					Text: "I have to tell them",
 				},
 			},
 		},
 		{
-			Name:  "Marriage",
-			Value: "Your engaged. No sex before marriage",
-			Option: []Option{
+			Name: "Marriage",
+			Text: "Your engaged. No sex before marriage",
+			Options: []Option{
 				{
 					Oid:  1,
-					Name: "That's right. No sex before marriage",
+					Text: "That's right. No sex before marriage",
 				},
 				{
 					Oid:  0,
-					Name: "God forgive me",
+					Text: "God forgive me",
 				},
 				{
 					Oid:  -1,
-					Name: "This question ain't real",
+					Text: "This question ain't real",
 				},
 			},
 		},

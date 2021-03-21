@@ -4,14 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:twentyone_dating/model/Question.dart';
 import 'package:twentyone_dating/widgets/QuestionStateless.dart';
-import 'package:twentyone_dating/widgets/QuestionWidget.dart';
 import 'package:twentyone_dating/widgets/VideoContainer.dart';
+import 'package:twentyone_dating/widgets/questions/PersonalityType.dart';
 
 class Home extends StatelessWidget {
 
-  Home(this.questionList);
 
-  final List<Question> questionList;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class Home extends StatelessWidget {
           onVerticalDragEnd: (dragUpdateDetails) {
             print("$questions bloo");
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) =>
-                QuestionWidget(question: questionList.first)));
+                PersonalityType()));
           },
           child: Center(
             child: Column(

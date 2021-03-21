@@ -65,7 +65,7 @@ func readAllQuestions() func(tx neo4j.Transaction) (interface{}, error) {
 
 		var questions []Question
 
-		record, err := tx.Run("MATCH (n:Question)-[]->(r:Response) RETURN n{.name, .value, questions:collect(r)}", map[string]interface{}{})
+		record, err := tx.Run("MATCH (n:Question)-[]->(r:Response) RETURN n{.name, .text, options:collect(r{.text, .oid})} ", map[string]interface{}{})
 		if err != nil {
 			panic(fmt.Errorf("could not run query %v", err))
 		}
@@ -75,18 +75,21 @@ func readAllQuestions() func(tx neo4j.Transaction) (interface{}, error) {
 			panic(fmt.Errorf("error collecting records %v", err))
 		}
 
-		for i, v := range records {
+		for _, v := range records {
 			var question Question
 
 			node := v.Values[0].(map[string]interface{})
-
-			fmt.Println(node, i)
 
 			str, err := json.Marshal(node)
 			if err != nil {
 				panic(fmt.Errorf("error unmarshalling %v", err))
 			}
 			err = json.Unmarshal(str, &question)
+			if err != nil {
+				panic(fmt.Errorf("error unmarshalling %v", err))
+			}
+
+			fmt.Println(question)
 
 			questions = append(questions, question)
 		}
@@ -127,10 +130,9 @@ func writeQuestions(questions []Question) func(tx neo4j.Transaction) (interface{
 }
 
 func createQueryStr(q Question) string {
-	cypher := fmt.Sprintf("merge (q:Question { name: \"%v\", value: \"%v\" })", q.Name, q.Value)
-
-	for i, v := range q.Option {
-		cypher += fmt.Sprintf("\nmerge (q)-[:IS_ANSWERED_BY]->(r%v:Response { oid: %v, name: \"%v\"  })", i, v.Oid, v.Name)
+	cypher := fmt.Sprintf("merge (q:Question { name: \"%v\", text: \"%v\" })", q.Name, q.Text)
+	for i, v := range q.Options {
+		cypher += fmt.Sprintf("\nmerge (q)-[:IS_ANSWERED_BY]->(r%v:Response { oid: %v, text: \"%v\"  })", i, v.Oid, v.Text)
 	}
 
 	return cypher

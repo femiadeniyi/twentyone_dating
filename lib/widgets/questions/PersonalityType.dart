@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:twentyone_dating/model/Question.dart';
-import 'package:twentyone_dating/widgets/QuestionWidget.dart';
-
+import 'package:twentyone_dating/widgets/QuestionStateless.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class PersonalityType extends StatefulWidget {
 
-  PersonalityType(this.question);
 
-  final Question question;
 
   @override
   _PersonalityTypeState createState() => _PersonalityTypeState();
@@ -22,6 +19,24 @@ class PersonalityType extends StatefulWidget {
 class _PersonalityTypeState extends State<PersonalityType> {
   final _formKey = GlobalKey<FormState>();
   late String ei, si, tf, jp;
+
+  late final List<Question> _questionList;
+  late final Question _question;
+
+  _init(){
+    Question.fetchQuestions().then((value){
+      _questionList = value;
+      _question = Question(text: value.first.text, options: value.first.options, allQuestions: _questionList);
+      print("done");
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _init();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +52,20 @@ class _PersonalityTypeState extends State<PersonalityType> {
       body: Container(
         padding: EdgeInsets.all(16),
         child: GestureDetector(
-          onVerticalDragEnd: (dragUpdateDetails) {
+          onVerticalDragEnd: (dragUpdateDetails) async {
             print(_formKey.currentState);
 
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
 
+              SharedPreferences prefs = await SharedPreferences.getInstance();
               var response = "$ei$si$tf$jp";
+              await prefs.setString('personality', response);
 
 
-
-
-            print("$questions");
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder:
-                    (_) => QuestionWidget(question: widget.question.next())
+                    (_) => QuestionStateless(question: _question)
                 )
               );
             }
@@ -74,7 +88,7 @@ class _PersonalityTypeState extends State<PersonalityType> {
                         Colors.red,
                       ],
                       text: [
-                        widget.question.question
+                        "What is your personality type?"
                       ],
                       textStyle: GoogleFonts.roboto(
                           fontWeight: FontWeight.w200,

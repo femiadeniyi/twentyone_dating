@@ -1,6 +1,7 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
+import 'package:twentyone_dating/model/Option.dart';
 
 part 'Question.g.dart';
 
@@ -8,18 +9,43 @@ part 'Question.g.dart';
 class Question {
 
   Question(
-      {required this.question,
-      required this.responses,
-      required this.answers,
-      required this.type,
-      required this.allQuestions
+      {required this.text,
+      this.name,
+      required this.options,
+      this.allQuestions = const []
       });
 
-  final String question;
-  final List<String> responses;
-  final List<String> answers;
-  final String type;
+  final String text;
+  final String? name;
+  final List<Option> options;
   final List<Question> allQuestions;
+
+
+  static Future<List<Question>> fetchQuestions() async{
+    const bool isProduction = bool.fromEnvironment('dart.vm.product');
+    if (isProduction){
+      final List<Question> l =[];
+      return l;
+    } else {
+      final resp = await http.get(Uri.http('localhost:8080', 'question'));
+      if (resp.statusCode == 200) {
+
+        List list = jsonDecode(resp.body);
+        List<Question> questionList = list.map((e){
+          var text = e["text"] as String;
+          var options = (e["options"] as List<dynamic>).map((e) => Option.fromJson(e)).toList();
+          return Question(text: text, options: options);
+        }).toList();
+
+        print("$questionList");
+
+        return questionList;
+      } else {
+        throw Exception('Failed to get questions');
+      }
+    }
+
+  }
 
   String toString() {
     // TODO: implement toString
@@ -27,10 +53,22 @@ class Question {
   }
 
 
-  Question next(){
-    var index = allQuestions.indexWhere((element) => element.question == question)+1;
-    var next = allQuestions.asMap().entries.where((element) => element.key == index).toList().first.value;
-    var q = Question(question: next.question, responses: next.responses, answers: next.answers, type: next.type, allQuestions: allQuestions);
+  Question next(Option _option){
+
+    var nextIndex = allQuestions.indexWhere((element) => element.text == text)+1;
+
+    var next = allQuestions.asMap().entries.where((element) => element.key == nextIndex).toList().first.value;
+
+    var newAllQuestions = allQuestions.map((e) {
+      if (e.text == text) {
+        return Question(text: e.text, options: [Option(text: _option.text, oid: _option.oid)]);
+      } else {
+        return e;
+      }
+    }).toList();
+    print("halla $nextIndex");
+
+    var q = Question(text: next.text, options: next.options,  allQuestions: newAllQuestions);
     return q;
   }
 

@@ -66,19 +66,6 @@ class _AppRouterState extends State<AppRouter> {
   late final List<Question> _questionList;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    var json = jsonEncode(questions);
-
-    List list = jsonDecode(json);
-
-    List<Question> questionList = list.map((e) => Question.fromJson(e)).toList();
-    var newList = questionList.map((e) => Question(question:e.question, responses:e.responses, answers:e.answers, type:e.type, allQuestions:questionList)).toList();
-    _questionList = newList;
-  }
-
 
 
 
@@ -86,7 +73,7 @@ class _AppRouterState extends State<AppRouter> {
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 500),
-      child: Home(_questionList),
+      child: Home(),
     );
 
     // The Flutter framework has been optimized to make rerunning build methods
