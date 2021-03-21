@@ -7,6 +7,8 @@ import 'package:twentyone_dating/model/Question.dart';
 import 'package:twentyone_dating/widgets/QuestionStateless.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../SubmitQuestions.dart';
+
 
 class PersonalityType extends StatefulWidget {
 
@@ -65,7 +67,7 @@ class _PersonalityTypeState extends State<PersonalityType> {
 
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder:
-                    (_) => QuestionStateless(question: _question)
+                    (_) => SubmitQuestions(question: _question)
                 )
               );
             }

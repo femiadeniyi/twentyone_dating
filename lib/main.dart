@@ -1,16 +1,15 @@
-import 'dart:convert';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twentyone_dating/widgets/Home.dart';
 import 'package:twentyone_dating/widgets/questions/PersonalityType.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'model/Question.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp().then((value){
+    runApp(MyApp());
+    return null;
+  });
 }
 
 class MyApp extends StatelessWidget {
