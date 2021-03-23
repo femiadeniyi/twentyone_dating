@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:twentyone_dating/model/Person.dart';
 import 'package:twentyone_dating/model/Question.dart';
 import 'package:twentyone_dating/widgets/QuestionStateless.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../SubmitQuestions.dart';
+import '../PersonQuestions.dart';
 
 
 class PersonalityType extends StatefulWidget {
@@ -67,7 +68,7 @@ class _PersonalityTypeState extends State<PersonalityType> {
 
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder:
-                    (_) => SubmitQuestions(question: _question)
+                    (_) => PersonQuestions(question: _question)
                 )
               );
             }

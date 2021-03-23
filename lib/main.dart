@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:twentyone_dating/widgets/Home.dart';
-import 'package:twentyone_dating/widgets/questions/PersonalityType.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'model/Question.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp().then((value){
-    runApp(MyApp());
-    return null;
-  });
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
